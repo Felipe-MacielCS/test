@@ -1,5 +1,6 @@
 const crypto = require("crypto");
-
+const secretKey = crypto.randomBytes(32).toString('base64');
+console.log("SECRET_KEY=" + secretKey); 
 //encryption/hashing settings
 const saltSize = 16;
 const keySize = 64;
@@ -10,7 +11,7 @@ const scryptOptions = {
   r: 8,
   p: 1,
 };
-const secretKey = Buffer.from(process.env.SECRET_KEY, "base64");
+//const secretKey = Buffer.from(process.env.SECRET_KEY, "base64");
 
 /**
  * Gets a randomized salt for a new password

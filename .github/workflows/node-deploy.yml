@@ -48,12 +48,14 @@ jobs:
         env:
           NAME: "Root"
         with:
-          hosts: "ubuntu@ec2-3-144-81-171.us-east-2.compute.amazonaws.com"
+          hosts: "ubuntu@{{ secrets.REMOTE_HOST }}"
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
           debug: false
           command: |
             cd nodeapps/test-backend
-            npm install
+            sudo systemctl stop mysql
+            npm ci
+            sudo systemctl start mysql
             sudo systemctl stop test-backend
             sudo cp test-backend.service /lib/systemd/system/test-backend.service
             sudo systemctl daemon-reload
